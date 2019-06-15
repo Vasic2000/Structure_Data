@@ -1,8 +1,14 @@
 package lesson_2;
 
 public class SortedArrayImpl<E extends Object & Comparable<? super E>> extends ArrayImpl<E> {
+    private static final int INITIAL_CAPACITY = 16;
+
     public SortedArrayImpl(int initialCapacity) {
         super(initialCapacity);
+    }
+
+    public SortedArrayImpl() {
+        this(INITIAL_CAPACITY);
     }
 
     @Override//O(logN)
