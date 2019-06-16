@@ -1,4 +1,4 @@
-package lesson_2;
+package Lesson_2;
 
 public class InvalidArrayStateException extends RuntimeException {
     public InvalidArrayStateException(int index, int arraySize) {

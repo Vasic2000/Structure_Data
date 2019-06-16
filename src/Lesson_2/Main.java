@@ -1,4 +1,4 @@
-package lesson_2;
+package Lesson_2;
 
 public class Main {
     public static Array<Integer> array1 = new ArrayImpl<>();
