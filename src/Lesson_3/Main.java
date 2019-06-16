@@ -1,32 +1,25 @@
 package Lesson_3;
 
-import Lesson_3.queue.Queue;
-import Lesson_3.queue.QueueImpl;
-import Lesson_3.stack.Stack;
-import Lesson_3.stack.StackImpl;
+import Lesson_3.Deck.Deck;
+import Lesson_3.Deck.DeckImpl;
 
 public class Main {
     public static void main(String[] args) {
-        Stack stack = new StackImpl<Integer>(5);
+        System.out.println(reVerse("Мама мыла раму"));
+    }
 
-        System.out.println(stack.push(1));
-        System.out.println(stack.push(3));
-        System.out.println(stack.push(1));
-        System.out.println(stack.push(4));
-        System.out.println(stack.push(15));
-        System.out.println(stack.push(0));
+    public static String reVerse(String str) {
+        char [] sstr = str.toCharArray();
+        char [] ret = new char [str.length()];
 
-        stack.pop();
+        Deck stroka = new DeckImpl<String>(str.length());
 
-        for(int i = stack.size(); i >= 0; i--)
-            System.out.println(stack.pop());
+        for(int i =0; i < sstr.length; i++)
+            stroka.insertRight(sstr[i]);
 
-        Queue queue = new QueueImpl(3);
-        queue.insert(1);
-        queue.insert(2);
-        queue.insert(3);
+        for(int i =0; i < sstr.length; i++)
+            ret[i] = (char) stroka.removeRight();
 
-        for(int i = queue.size(); i >= 0; i--)
-            System.out.println(queue.remove());
+        return String.valueOf(ret);
     }
 }
