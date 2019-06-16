@@ -6,7 +6,7 @@ public interface Stack<E> {
 
     E pop();
 
-    E peel();
+    E peek();
 
     int size();
 

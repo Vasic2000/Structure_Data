@@ -1,6 +1,6 @@
 package Lesson_3.queue;
 
-public class PriorityQueue<E extends Object & Comparable<? super  E>> extends QeueImpl<E> {
+public class PriorityQueue<E extends Object & Comparable<? super  E>> extends QueueImpl<E> {
     public PriorityQueue(int maxSize) {
         super(maxSize);
     }

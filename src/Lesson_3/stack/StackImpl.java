@@ -27,7 +27,7 @@ public class StackImpl<E> implements Stack<E> {
     }
 
     @Override
-    public E peel() {
+    public E peek() {
         if(!isEmpty())
             return data[size - 1];
         return null;
