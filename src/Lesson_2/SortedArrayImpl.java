@@ -1,4 +1,4 @@
-package lesson_2;
+package Lesson_2;
 
 public class SortedArrayImpl<E extends Object & Comparable<? super E>> extends ArrayImpl<E> {
     private static final int INITIAL_CAPACITY = 16;

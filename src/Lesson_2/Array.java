@@ -1,4 +1,4 @@
-package lesson_2;
+package Lesson_2;
 
 public interface Array<E> {
     void add(E value);
