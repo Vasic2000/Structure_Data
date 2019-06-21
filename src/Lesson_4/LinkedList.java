@@ -1,6 +1,8 @@
 package Lesson_4;
 
-public interface LinkedList<E> {
+import java.util.Iterator;
+
+public interface LinkedList<E> extends Iterator<E> {
 
     void insertFirst(E value);
 
@@ -19,6 +21,18 @@ public interface LinkedList<E> {
     E getFirstElement();
 
     Entry getFirst();
+
+    //-------------
+    @Override
+    default boolean hasNext() {
+        return false;
+    }
+
+    @Override
+    default E next() {
+        return null;
+    }
+    //-------------
 
     class Entry<E> {
         public final E value;

@@ -4,7 +4,6 @@ public class SimpleLinkedListImpl<E> implements LinkedList<E> {
     protected Entry<E> firstElement;
     protected int size;
 
-
     @Override
     public void insertFirst(E value) {
         Entry<E> entry = new Entry<>(value);
@@ -95,4 +94,16 @@ public class SimpleLinkedListImpl<E> implements LinkedList<E> {
     public Entry getFirst() {
         return firstElement;
     }
+
+    //-------------
+    @Override
+    public boolean hasNext() {
+        return this.next() != null;
+    }
+
+    @Override
+    public E next() {
+        return this.next();
+    }
+    //-------------
 }
