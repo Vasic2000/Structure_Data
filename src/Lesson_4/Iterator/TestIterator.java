@@ -1,5 +1,4 @@
 package Lesson_4.Iterator;
-
 import Lesson_4.LinkedList;
 import Lesson_4.SimpleLinkedListImpl;
 
@@ -51,6 +50,7 @@ public class TestIterator {
 
 
         Iterator<Integer> iterator = linkedList1JDK.iterator();
+
         while (iterator.hasNext()) {
             Integer value = iterator.next();
             System.out.print(value + " ");

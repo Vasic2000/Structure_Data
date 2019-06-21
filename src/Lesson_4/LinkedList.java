@@ -2,7 +2,7 @@ package Lesson_4;
 
 import java.util.Iterator;
 
-public interface LinkedList<E> extends Iterator<E> {
+public interface LinkedList<E> extends Iterator<E>, Iterable {
 
     void insertFirst(E value);
 
@@ -23,6 +23,11 @@ public interface LinkedList<E> extends Iterator<E> {
     Entry getFirst();
 
     //-------------
+    @Override
+    default Iterator<E> iterator() {
+        return this;
+    };
+
     @Override
     default boolean hasNext() {
         return false;

@@ -1,7 +1,10 @@
 package Lesson_4;
 
-public class SimpleLinkedListImpl<E> implements LinkedList<E> {
+import java.util.Iterator;
+
+public class SimpleLinkedListImpl<E> implements LinkedList<E>, Iterator<E> {
     protected Entry<E> firstElement;
+    protected Entry<E> iterator;
     protected int size;
 
     @Override
@@ -96,14 +99,19 @@ public class SimpleLinkedListImpl<E> implements LinkedList<E> {
     }
 
     //-------------
+    public Iterator<E> iterator() {
+        return this;
+    }
+
     @Override
     public boolean hasNext() {
-        return this.next() != null;
+        return iterator.next != null;
     }
 
     @Override
     public E next() {
-        return this.next();
+        iterator = firstElement.next;
+        return iterator.value;
     }
     //-------------
 }
