@@ -1,9 +1,13 @@
 package Lesson_4;
 
-public class SimpleLinkedListImpl<E> implements LinkedList<E> {
-    protected Entry<E> firstElement;
-    protected int size;
+import Lesson_4.Iterator.LinkedListIterator;
 
+import java.util.Iterator;
+
+public class SimpleLinkedListImpl<E> implements LinkedList<E> {
+    public Entry<E> firstElement;
+    protected Entry<E> iterator;
+    protected int size;
 
     @Override
     public void insertFirst(E value) {
@@ -94,5 +98,10 @@ public class SimpleLinkedListImpl<E> implements LinkedList<E> {
     @Override
     public Entry getFirst() {
         return firstElement;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new LinkedListIterator<E>(this);
     }
 }
