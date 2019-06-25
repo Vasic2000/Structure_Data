@@ -2,47 +2,23 @@ package Lesson_6;
 
 public class Main_6 {
     public static void main(String[] args) {
-//        testTree();
-        Tree<Integer> tree = new TreeImpl<>();
-        tree.add(60);
-        tree.add(25);
-        tree.add(66);
-        tree.add(15);
-        tree.add(5);
-        tree.add(20);
-        tree.add(45);
-        tree.add(30);
-        tree.add(55);
-        tree.add(32);
+        Tree<Integer>[] tree = new TreeImpl[20];
+        double sbal = 0;
 
-        tree.display();
+//      Создал и показал 20 деревьев
+        for(int i = 0; i < 20; i++) {
+            tree[i] = new TreeImpl<>();
+            for(int j = 0; j < 50; j++) {
+                tree[i].add((int) (Math.random() * 40) - 20);
+            }
+            tree[i].display();
 
-        tree.remove(25);
+            if (tree[i].isBald()) {
+                sbal++;
+            }
+        }
 
-        tree.display();
+        System.out.println("Сбалансированных деревьев - " + (sbal / 20) * 100 + "%");
 
-
-    }
-
-    private static void testTree() {
-        Tree<Integer> tree = new TreeImpl<>();
-        tree.add(60);
-        tree.add(50);
-        tree.add(66);
-        tree.add(70);
-        tree.add(67);
-        tree.add(81);
-        tree.add(40);
-        tree.add(31);
-        tree.add(45);
-        tree.add(55);
-        tree.add(57);
-
-        System.out.println("Root is 60: " + tree.find(60));
-        System.out.println("Find 70: " + tree.find(70));
-        System.out.println("Find 31: " + tree.find(31));
-        System.out.println("Find 555: " + tree.find(555));
-
-        tree.traverse(Tree.TraverseMode.IN_ORDER);
     }
 }

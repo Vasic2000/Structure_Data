@@ -24,7 +24,11 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
 
         Node<E> parent = nodeAndParent.parent;
 
-        assert parent != null;
+        assert parent != null; //Это проверка
+
+//      Чтобы не делать глубже 4
+        if(nodeAndParent.depth > 4) return false;
+
         if (parent.shouldBeLeft(value)) {
             parent.setLeftChild(newNode);
         } else {
@@ -43,13 +47,15 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
     private NodeAndParent doFind(E value) {
         Node<E> parent = null;
         Node<E> current = this.root;
+        int depth = 1;
 
         while (current != null) {
             if (current.getValue().equals(value)) {
-                return new NodeAndParent(current, parent);
+                return new NodeAndParent(current, parent, depth);
             }
 
             parent = current;
+            depth++;
             if (current.shouldBeLeft(value)) {
                 current = current.getLeftChild();
             } else {
@@ -57,7 +63,7 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
             }
         }
 
-        return new NodeAndParent(null, parent);
+        return new NodeAndParent(null, parent, depth);
     }
 
 //    -------------------------------------
@@ -262,10 +268,32 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
     private class NodeAndParent {
         Node<E> current;
         Node<E> parent;
+        int depth; // Глубина
 
-        public NodeAndParent(Node<E> current, Node<E> parent) {
+        public NodeAndParent(Node<E> current, Node<E> parent, int depth) {
             this.current = current;
             this.parent = parent;
+            this.depth = depth;
         }
     }
+
+//    -------------------------------------
+
+    @Override
+    public boolean isBald() {
+        return isBalanced(root);
+    }
+
+//    -------------------------------------
+    public static boolean isBalanced(Node node) {
+        return (node == null) ||
+                isBalanced(node.leftChild) &&
+                        isBalanced(node.rightChild) &&
+                        Math.abs(height(node.leftChild) - height(node.rightChild)) <= 1;
+    }
+
+    private static int height(Node node) {
+        return node == null ? 0 : 1 + Math.max(height(node.leftChild), height(node.rightChild));
+    }
+
 }
