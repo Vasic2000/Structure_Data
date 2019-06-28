@@ -4,7 +4,12 @@ import java.util.*;
 
 public class Graph {
     private final List<Vertex> vertexList;
-    private final boolean[][] adjMat;
+
+    public void setAdjMat(boolean[][] adjMat) {
+        this.adjMat = adjMat;
+    }
+
+    private boolean[][] adjMat;
 
     private int size;
 
@@ -111,6 +116,77 @@ public class Graph {
 
 //    ------------------------------------------------
 
+    public void findBFS(String startLabel, String endLabel) {
+        int startIndex = indexOf(startLabel);
+
+        if (startIndex == -1) {
+            throw new IllegalArgumentException("Invalid startLabel: " + startLabel);
+        }
+
+        Vertex vertexLast = null;
+
+        Queue<Vertex> queue = new LinkedList<>();
+        //Доп лист, по которому назад найду выход
+        boolean[][] away = new boolean[adjMat.length][adjMat.length];
+
+        Vertex vertex = vertexList.get(startIndex);
+        visitVertex(queue, vertex);
+
+
+        while ( !queue.isEmpty() ) {
+            vertex = getNearUnvisitedVertex(queue.peek());
+
+            if (vertex != null) {
+                vertexLast = queue.peek();
+                visitVertex(queue, vertex);
+                away[indexOf(vertexLast.getLabel())][indexOf(vertex.getLabel())] = true;
+                away[indexOf(vertex.getLabel())][indexOf(vertexLast.getLabel())] = true;
+                if(vertex.getLabel().equals(endLabel)) {
+                    System.out.println("Нашёл кратчайший путь от " + startLabel + " до " + endLabel + ":");
+                    Graph halfGraph = new Graph(adjMat.length);
+                    for(Vertex v : vertexList)
+                        halfGraph.addVertex(v.getLabel());
+                    halfGraph.setAdjMat(away);
+                    System.out.println(halfGraph.findWay(endLabel, startLabel));
+                    break;
+                }
+            }
+            else {
+                queue.remove();
+            }
+        }
+        resetVertexState();
+    }
+
+    public Stack<Vertex> findWay(String startLabel, String endLabel) {
+        Stack<Vertex> way = new Stack<>();
+
+        int startIndex = indexOf(startLabel);
+        if (startIndex == -1) {
+            throw new IllegalArgumentException("Invalid startLabel: " + startLabel);
+        }
+
+        Vertex vertex = vertexList.get(startIndex);
+        visitVertex(way, vertex);
+
+        while ( !way.isEmpty() ) {
+            vertex = getNearUnvisitedVertex(way.peek());
+
+            if (vertex != null) {
+                visitVertex(way, vertex);
+                if(vertex.getLabel().equals(endLabel)) {
+                    return reverse(way);
+                }
+            }
+            else {
+                way.pop();
+            }
+        }
+        return way;
+    }
+
+//    ------------------------------------------------
+
     private void resetVertexState() {
         for (int i = 0; i < size; i++) {
             vertexList.get(i).setVisited(false);
@@ -168,4 +244,12 @@ public class Graph {
     public boolean isEmpty() {
         return  getSize() == 0;
     }
+
+    public Stack<Vertex> reverse (Stack<Vertex> way){
+        Stack<Vertex> returnWay = new Stack<>();
+        for(int i = way.size() - 1; i > -1; i--)
+            returnWay.add(way.get(i));
+        return returnWay;
+    }
+
 }
