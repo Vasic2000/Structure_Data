@@ -30,6 +30,7 @@ public class Main_8 {
 
         System.out.println("Banana cost is " + hashTable.get(new Item(77, "Banana")));
 
+        System.out.println("Размер = " + hashTable.size());
         hashTable.display();
 
     }

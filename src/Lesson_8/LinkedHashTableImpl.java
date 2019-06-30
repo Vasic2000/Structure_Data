@@ -1,21 +1,20 @@
 package Lesson_8;
 
-
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class LinkedHashTableImpl implements HashTable {
 
-    private ArrayList<Entry>[] data;
+    private LinkedList<Entry>[] data;
 
     private int size;
     private int maxSize;
 
     public LinkedHashTableImpl(int maxSize) {
         this.maxSize = maxSize;
-        this.data = new ArrayList [maxSize * 2];
+        this.data = new LinkedList [maxSize * 2];
 
         for (int i = 0; i < data.length; i++) {
-            data[i] = new ArrayList<>();
+            data[i] = new LinkedList<>();
         }
     }
 
@@ -40,7 +39,6 @@ public class LinkedHashTableImpl implements HashTable {
         for(int i = 0; i < data[index].size(); i++)
             if(data[index].get(i).key.equals(item)) {
                 data[index].set(i, en);
-                size++;
                 return true;
             }
 
@@ -74,6 +72,7 @@ public class LinkedHashTableImpl implements HashTable {
             for(int i = 0; i < data[index].size(); i++)
                 if(data[index].get(i).key.equals(item)) {
                     data[index].remove(i);
+                    size--;
                     return true;
                 }
         }
