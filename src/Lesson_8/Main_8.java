@@ -3,7 +3,9 @@ package Lesson_8;
 public class Main_8 {
     public static void main(String[] args) {
         // HashTable hashTable = new HashTableImpl(5);
-        HashTable hashTable = new DoubleHashTableImpl(5);
+        //HashTable hashTable = new DoubleHashTableImpl(5);
+        HashTable hashTable = new LinkedHashTableImpl(5);
+
 
 
 
@@ -21,10 +23,13 @@ public class Main_8 {
         System.out.println("Potato cost is " + hashTable.get(new Item(21, "Potato")));
         System.out.println("Banana cost is " + hashTable.get(new Item(77, "Banana")));
 
-        hashTable.delete(new Item(21, "Potato"));
-        hashTable.delete(new Item(77, "Banana"));
+        System.out.println(hashTable.delete(new Item(21, "Potato")));
+        System.out.println(hashTable.delete(new Item(21, "Potato")));
+        System.out.println(hashTable.delete(new Item(77, "Banana")));
+        System.out.println(hashTable.delete(new Item(95, "Plum")));
 
         System.out.println("Banana cost is " + hashTable.get(new Item(77, "Banana")));
+
         hashTable.display();
 
     }
