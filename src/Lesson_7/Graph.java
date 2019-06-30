@@ -33,7 +33,7 @@ public class Graph {
     }
 
     public void addEdge(String start, String finish) {
-        int startIndex =  indexOf(start);
+        int startIndex = indexOf(start);
         int finishIndex = indexOf(finish);
 
         if (startIndex == -1 || finishIndex == -1) {
@@ -59,6 +59,7 @@ public class Graph {
 
     /**
      * англ. Depth-first search, DFS
+     *
      * @param startLabel
      */
     public void dfs(String startLabel) {
@@ -72,12 +73,11 @@ public class Graph {
         Vertex vertex = vertexList.get(startIndex);
         visitVertex(stack, vertex);
 
-        while ( !stack.isEmpty() ) {
+        while (!stack.isEmpty()) {
             vertex = getNearUnvisitedVertex(stack.peek());
             if (vertex != null) {
                 visitVertex(stack, vertex);
-            }
-            else {
+            } else {
                 stack.pop();
             }
         }
@@ -87,6 +87,7 @@ public class Graph {
 
     /**
      * англ. breadth-first search, BFS
+     *
      * @param startLabel
      */
     public void bfs(String startLabel) {
@@ -99,12 +100,11 @@ public class Graph {
         Vertex vertex = vertexList.get(startIndex);
         visitVertex(queue, vertex);
 
-        while ( !queue.isEmpty() ) {
+        while (!queue.isEmpty()) {
             vertex = getNearUnvisitedVertex(queue.peek());
             if (vertex != null) {
                 visitVertex(queue, vertex);
-            }
-            else {
+            } else {
                 queue.remove();
             }
         }
@@ -133,7 +133,7 @@ public class Graph {
         visitVertex(queue, vertex);
 
 
-        while ( !queue.isEmpty() ) {
+        while (!queue.isEmpty()) {
             vertex = getNearUnvisitedVertex(queue.peek());
 
             if (vertex != null) {
@@ -141,17 +141,16 @@ public class Graph {
                 visitVertex(queue, vertex);
                 away[indexOf(vertexLast.getLabel())][indexOf(vertex.getLabel())] = true;
                 away[indexOf(vertex.getLabel())][indexOf(vertexLast.getLabel())] = true;
-                if(vertex.getLabel().equals(endLabel)) {
+                if (vertex.getLabel().equals(endLabel)) {
                     System.out.println("Нашёл кратчайший путь от " + startLabel + " до " + endLabel + ":");
                     Graph halfGraph = new Graph(adjMat.length);
-                    for(Vertex v : vertexList)
+                    for (Vertex v : vertexList)
                         halfGraph.addVertex(v.getLabel());
                     halfGraph.setAdjMat(away);
                     System.out.println(halfGraph.findWay(endLabel, startLabel));
                     break;
                 }
-            }
-            else {
+            } else {
                 queue.remove();
             }
         }
@@ -169,16 +168,15 @@ public class Graph {
         Vertex vertex = vertexList.get(startIndex);
         visitVertex(way, vertex);
 
-        while ( !way.isEmpty() ) {
+        while (!way.isEmpty()) {
             vertex = getNearUnvisitedVertex(way.peek());
 
             if (vertex != null) {
                 visitVertex(way, vertex);
-                if(vertex.getLabel().equals(endLabel)) {
+                if (vertex.getLabel().equals(endLabel)) {
                     return reverse(way);
                 }
-            }
-            else {
+            } else {
                 way.pop();
             }
         }
@@ -242,14 +240,58 @@ public class Graph {
     }
 
     public boolean isEmpty() {
-        return  getSize() == 0;
+        return getSize() == 0;
     }
 
-    public Stack<Vertex> reverse (Stack<Vertex> way){
+    public Stack<Vertex> reverse(Stack<Vertex> way) {
         Stack<Vertex> returnWay = new Stack<>();
-        for(int i = way.size() - 1; i > -1; i--)
+        for (int i = way.size() - 1; i > -1; i--)
             returnWay.add(way.get(i));
         return returnWay;
+    }
+
+    public Stack<String> findShortPathViaBfs(String startLabel, String finishLabel) {
+        int startIndex = indexOf(startLabel);
+        int finishIndex = indexOf(finishLabel);
+
+        if (startIndex == -1)
+            throw new IllegalArgumentException("Нет такого города - " + startLabel);
+
+        if (finishIndex == -1)
+            throw new IllegalArgumentException("Нет такого города - " + finishLabel);
+
+        Queue<Vertex> queue = new ArrayDeque<Vertex>();
+
+        Vertex vertex = vertexList.get(startIndex);
+        visitVertex(queue, vertex);
+
+        while (!queue.isEmpty()) {
+            vertex = getNearUnvisitedVertex(queue.peek());
+            if (vertex == null) {
+                queue.remove();
+            } else {
+                visitVertex(queue, vertex);
+                vertex.setPreviousVertex(queue.peek());
+                if (vertex.getLabel().equals(finishLabel)) {
+                    return buildPath(vertex);
+                }
+            }
+        }
+
+        resetVertexState();
+        return null;
+    }
+
+
+    private Stack<String> buildPath(Vertex vertex) {
+        Stack<String> stack = new Stack<>();
+        Vertex current = vertex;
+        while (current != null) {
+            stack.push(current.getLabel());
+            current = current.getPreviousVertex();
+        }
+
+        return stack;
     }
 
 }

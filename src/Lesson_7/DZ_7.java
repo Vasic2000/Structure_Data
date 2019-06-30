@@ -1,5 +1,7 @@
 package Lesson_7;
 
+import java.util.Stack;
+
 public class DZ_7 {
     public static void main(String[] args) {
         Graph road_map = makeGraph();
@@ -8,6 +10,10 @@ public class DZ_7 {
 //        road_map.dfs("Москва");
 
         road_map.findBFS("Новомосковск", "Саратов");
+
+        Stack<String> path = road_map.findShortPathViaBfs("Новомосковск", "Саратов");
+        System.out.println("Кратчайший путь:");
+        showShortPath(path);
     }
 
 
@@ -47,8 +53,20 @@ public class DZ_7 {
 
         graph.addEdge("Липецк", "Елец");
 
-
         return graph;
+    }
+
+    private static void showShortPath(Stack<String> path) {
+        StringBuilder sb = new StringBuilder();
+        boolean isFirst = true;
+
+        while(!path.isEmpty()) {
+            if(!isFirst)
+                sb.append(" -> ");
+            isFirst = false;
+            sb.append(path.pop());
+        }
+        System.out.println(sb);
     }
 
 }
